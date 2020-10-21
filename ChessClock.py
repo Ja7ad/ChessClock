@@ -1,8 +1,6 @@
 # standard
 import sys
 # internal
-from src.UI import ChessClockUI
-from src.Model import ChessClockModel
 from src.Controller import ChessClockController
 # external
 from PyQt5.QtWidgets import QApplication
@@ -10,10 +8,8 @@ from PyQt5.QtWidgets import QApplication
 
 def main():
     app = QApplication(sys.argv)
-    ui = ChessClockUI()
-    ui.showMaximized()
-    model = ChessClockModel()
-    ChessClockController(ui, model)
+    chess_clock_controller = ChessClockController()
+    chess_clock_controller.show_maximize()
     sys.exit(app.exec_())
 
 

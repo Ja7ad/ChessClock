@@ -18,36 +18,29 @@ class ChessClockUI(QMainWindow):
         self._centeral_widget = QWidget(self)
         self._centeral_widget.setLayout(self.general_layout)
         self.setCentralWidget(self._centeral_widget)
-
         # signals
         self.signals = ChessClockUISignals()
         # create ui
         self._create_ui()
 
     def _create_ui(self):
-        clocks = [
-            {
-                'name': 'white_clock',
-                'style': {'clr': 'black', 'bg-clr': 'white', 'fs': '200px'}
-            },
-            {
-                'name': 'black_clock',
-                'style': {'clr': 'white', 'bg-clr': 'black', 'fs': '200px'}
-            }
-        ]
-        for clock in clocks:
+        for name in ['white_clock', 'black_clock']:
             wrapper = QVBoxLayout()
             c = QLabel()
             c.setAlignment(Qt.AlignCenter)
-            c.setStyleSheet('color: {clr}; background-color: {bg-clr}; font-size: {fs}'.format(**clock['style']))
-            setattr(self, clock['name'], c)
-            wrapper.addWidget(getattr(self, clock['name']))
+            setattr(self, name, c)
+            wrapper.addWidget(getattr(self, name))
             self.general_layout.addLayout(wrapper)
 
     @staticmethod
     def _clock_format(_time):
         mins, secs = divmod(_time, 60)
         return '{:02d}:{:02d}'.format(mins, secs)
+
+    def set_style(self, white_style, black_style):
+        s = 'color:{color};font-size:{font-size};background-color:{background-color};'
+        self.white_clock.setStyleSheet(s.format(**white_style))
+        self.black_clock.setStyleSheet(s.format(**black_style))
 
     def update_clocks(self, white_time, black_time):
         self.white_clock.setText(self._clock_format(white_time))
